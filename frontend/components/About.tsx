@@ -19,10 +19,10 @@ export default function About({ profile }: { profile: Profile }) {
           <div className="text-center text-cyan text-[12.5px] font-mono mt-1">Python &amp; Backend Developer</div>
           <div className="flex flex-col gap-2.5 mt-6 pt-5 border-t border-line">
             {[
-              "MCA student",
-              `Based in ${profile.location || "India"}`,
-              "Open-source contributor",
-              "Cyber security learner",
+              "🎓 MCA Candidate",
+              `🐍 Python Backend Developer`,
+              "🤖 AI Application Builder",
+              "🔐 Cybersecurity Enthusiast",
             ].map((t) => (
               <div key={t} className="flex items-center gap-2.5 text-[13px] text-dim">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan flex-shrink-0" />
@@ -37,7 +37,7 @@ export default function About({ profile }: { profile: Profile }) {
             {profile.long_bio}
           </Reveal>
           <Reveal className="grid grid-cols-3 gap-3.5" delay={0.1}>
-            {[["15+", "Certificates"], ["20+", "Courses"], ["1000+", "Hours coding"]].map(([n, l]) => (
+            {[["15+", "Certificates"], ["03+", "Featured Projects"], ["03 Months", "Professional Internship"]].map(([n, l]) => (
               <div key={l} className="glass p-5 text-center">
                 <div className="font-display text-2xl font-semibold text-white">{n}</div>
                 <div className="text-[10.5px] text-faint uppercase tracking-wider mt-1">{l}</div>
