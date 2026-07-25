@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - backend_instance:/app/instance
+      - backend_uploads:/app/uploads
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-change-this-secret-key}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-change-this-jwt-secret-key}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000}
+      - OWNER_EMAIL=${OWNER_EMAIL:-admin@example.com}
+      - OWNER_PASSWORD=${OWNER_PASSWORD:-ChangeMe123!}
+      - OWNER_NAME=${OWNER_NAME:-Gaurav Thorat}
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:5000}
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_instance:
+  backend_uploads:
