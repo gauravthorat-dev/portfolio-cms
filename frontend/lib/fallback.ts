@@ -8,7 +8,7 @@ export const fallbackProfile: Profile = {
   long_bio:
     "I build intelligent systems and scalable applications with clean backend architecture — mostly in Python and Flask, with a growing focus on AI-driven tools and secure design.",
   location: "India",
-  email: "hello@example.com",
+  email_public: "hello@example.com",
   linkedin_url: "https://linkedin.com/in/example",
   github_url: "https://github.com/example",
   website_url: "",

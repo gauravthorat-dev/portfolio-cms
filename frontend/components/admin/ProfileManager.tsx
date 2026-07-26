@@ -4,10 +4,17 @@ import { useEffect, useState } from "react";
 import { api, Profile } from "@/lib/api";
 
 const EMPTY: Profile = {
-  name: "", profile_picture: null, cover_image: null, short_bio: "", long_bio: "",
-  location: "", email: "", linkedin_url: "", github_url: "", website_url: "",
+  name: "",
+  profile_picture: null,
+  cover_image: null,
+  short_bio: "",
+  long_bio: "",
+  location: "",
+  email_public: "",
+  linkedin_url: "",
+  github_url: "",
+  website_url: "",
 };
-
 export default function ProfileManager() {
   const [form, setForm] = useState<Profile>(EMPTY);
   const [loading, setLoading] = useState(true);
@@ -45,9 +52,7 @@ export default function ProfileManager() {
     setSaved(false);
     setError("");
     try {
-      // Backend's PUT expects "email_public"; the GET response uses "email".
-      const { email, ...rest } = form;
-      const updated = await api.updateProfile({ ...rest, email_public: email });
+      const updated = await api.updateProfile(form);
       setForm(updated);
       setSaved(true);
     } catch {
@@ -64,7 +69,7 @@ export default function ProfileManager() {
     { key: "short_bio", label: "Short bio (shown in Hero)" },
     { key: "long_bio", label: "Long bio (shown in About)", textarea: true },
     { key: "location", label: "Location" },
-    { key: "email", label: "Public email" },
+    { key: "email_public", label: "Public email" },
     { key: "linkedin_url", label: "LinkedIn URL" },
     { key: "github_url", label: "GitHub URL" },
     { key: "website_url", label: "Website URL" },

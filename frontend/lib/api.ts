@@ -64,7 +64,7 @@ export type EducationItem = {
   order: number;
 };
 
-export type Profile = {
+export interface Profile {
   name: string;
   profile_picture: string | null;
   cover_image: string | null;
@@ -75,7 +75,7 @@ export type Profile = {
   linkedin_url: string | null;
   github_url: string | null;
   website_url: string | null;
-};
+}
 
 export type MessageItem = {
   id: number;
@@ -118,8 +118,17 @@ export const api = {
   getSkills: () => request<Skill[]>("/api/skills"),
   getExperience: () => request<ExperienceItem[]>("/api/experience"),
   getEducation: () => request<EducationItem[]>("/api/education"),
+
   getProfile: () => request<Profile>("/api/profile"),
+
+  updateProfile: (data: Profile) =>
+    request<Profile>("/api/profile", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+
   getSettings: () => request<Record<string, string>>("/api/settings"),
+
   sendMessage: (data: { name: string; email: string; message: string }) =>
     request("/api/messages", { method: "POST", body: JSON.stringify(data) }),
   trackVisit: (data: { path: string; referrer?: string; device?: string }) =>

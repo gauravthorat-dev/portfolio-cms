@@ -35,10 +35,18 @@ export default function Contact({ profile }: { profile: Profile }) {
               Have a role, project, or idea worth discussing? I read every message and reply personally.
             </p>
           </div>
-          {profile.email && (
-            <a href={`mailto:${profile.email}`} className="flex items-center gap-3.5 text-sm py-3 border-t border-line">
-              <span className="w-8.5 h-8.5 w-[34px] h-[34px] rounded-[10px] bg-cyan/10 border border-line flex items-center justify-center text-cyan"><Mail size={15} /></span>
-              <div>{profile.email}<span className="block text-[11px] text-faint font-mono">Email</span></div>
+          {profile.email_public && (
+            <a
+              href={`mailto:${profile.email_public}`}
+              className="flex items-center gap-3.5 text-sm py-3 border-t border-line"
+            >
+              <span className="w-8.5 h-8.5 w-[34px] h-[34px] rounded-[10px] bg-cyan/10 border border-line flex items-center justify-center text-cyan">
+                <Mail size={15} />
+              </span>
+              <div>
+                {profile.email_public}
+                <span className="block text-[11px] text-faint font-mono">Email</span>
+              </div>
             </a>
           )}
           {profile.linkedin_url && (
