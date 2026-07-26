@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Certificate, API_URL } from "@/lib/api";
+import { useEffect, useState } from "react";
+import { Certificate, API_URL, api } from "@/lib/api";
 import Reveal from "./Reveal";
 import { ExternalLink, Download, Maximize2, X } from "lucide-react";
 
@@ -16,8 +16,34 @@ const GRADE_COLORS: Record<string, string> = {
   Pass: "#5be8a8",
 };
 
+function ordered(items: Certificate[]) {
+  return [...items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
 export default function Certificates({ certificates }: { certificates: Certificate[] }) {
+  const [items, setItems] = useState<Certificate[]>(() => ordered(certificates));
   const [preview, setPreview] = useState<Certificate | null>(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+
+    api
+      .getCertificates()
+      .then((data) => {
+        if (active && Array.isArray(data)) {
+          setItems(ordered(data));
+          setError(false);
+        }
+      })
+      .catch(() => {
+        if (active) setError(true);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <section id="certificates" className="pt-32 md:pt-[150px] px-5 md:px-16 max-w-[1360px] mx-auto">
@@ -27,11 +53,12 @@ export default function Certificates({ certificates }: { certificates: Certifica
       </Reveal>
 
       <div className="grid md:grid-cols-3 gap-5">
-        {certificates.map((c, i) => {
+        {items.map((c, i) => {
           const logo = fileUrl(c.issuer_logo);
           const image = fileUrl(c.image);
           const pdf = fileUrl(c.pdf_file);
           const gradeColor = (c.grade && GRADE_COLORS[c.grade]) || "#3fe4ff";
+          const skills = Array.isArray(c.skills_learned) ? c.skills_learned : [];
 
           return (
             <Reveal key={c.id} delay={i * 0.05} className="glass p-6 transition-transform hover:-translate-y-1 flex flex-col">
@@ -62,9 +89,9 @@ export default function Certificates({ certificates }: { certificates: Certifica
                 </div>
               )}
 
-              {c.skills_learned?.length > 0 && (
+              {skills.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mt-3.5">
-                  {c.skills_learned.slice(0, 4).map((s) => (
+                  {skills.slice(0, 4).map((s) => (
                     <span key={s} className="text-[10px] px-2 py-1 rounded-full border border-line text-dim font-mono">
                       {s}
                     </span>
@@ -111,6 +138,9 @@ export default function Certificates({ certificates }: { certificates: Certifica
           );
         })}
       </div>
+      {error && items.length === 0 && (
+        <p className="mt-4 text-xs text-faint font-mono">Certificates are temporarily unavailable.</p>
+      )}
 
       {preview && (
         <div
