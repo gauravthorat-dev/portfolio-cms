@@ -1,10 +1,10 @@
 "use client";
 
-import ProfileManager from "@/components/admin/ProfileManager";
 import { useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { RESOURCES } from "@/lib/resourceConfig";
 import ResourceManager from "@/components/admin/ResourceManager";
+import ProfileManager from "@/components/admin/ProfileManager";
 import MessagesManager from "@/components/admin/MessagesManager";
 import { LogOut } from "lucide-react";
 
@@ -41,25 +41,26 @@ export default function DashboardPage() {
             <button
               key={r.key}
               onClick={() => setTab(r.key)}
-              className={`text-left px-4 py-2.5 rounded-lg text-sm whitespace-nowrap transition ${tab === r.key ? "bg-cyan/10 text-cyan" : "text-dim hover:text-text hover:bg-white/[0.03]"
-                }`}
+              className={`text-left px-4 py-2.5 rounded-lg text-sm whitespace-nowrap transition ${
+                tab === r.key ? "bg-cyan/10 text-cyan" : "text-dim hover:text-text hover:bg-white/[0.03]"
+              }`}
             >
               {r.label}
             </button>
           ))}
           <button
             onClick={() => setTab("profile")}
-            className={`text-left px-4 py-2.5 rounded-lg text-sm whitespace-nowrap transition ${tab === "profile"
-              ? "bg-cyan/10 text-cyan"
-              : "text-dim hover:text-text hover:bg-white/[0.03]"
-              }`}
+            className={`text-left px-4 py-2.5 rounded-lg text-sm whitespace-nowrap transition ${
+              tab === "profile" ? "bg-cyan/10 text-cyan" : "text-dim hover:text-text hover:bg-white/[0.03]"
+            }`}
           >
             Profile
           </button>
           <button
             onClick={() => setTab("messages")}
-            className={`text-left px-4 py-2.5 rounded-lg text-sm whitespace-nowrap transition ${tab === "messages" ? "bg-cyan/10 text-cyan" : "text-dim hover:text-text hover:bg-white/[0.03]"
-              }`}
+            className={`text-left px-4 py-2.5 rounded-lg text-sm whitespace-nowrap transition ${
+              tab === "messages" ? "bg-cyan/10 text-cyan" : "text-dim hover:text-text hover:bg-white/[0.03]"
+            }`}
           >
             Messages
           </button>

@@ -1,4 +1,4 @@
-import { Profile } from "@/lib/api";
+import { Profile, API_URL } from "@/lib/api";
 import Reveal from "./Reveal";
 
 export default function About({ profile }: { profile: Profile }) {
@@ -12,8 +12,17 @@ export default function About({ profile }: { profile: Profile }) {
       </Reveal>
       <div className="grid md:grid-cols-[0.85fr_1.15fr] gap-7">
         <Reveal className="glass p-8">
-          <div className="w-[120px] h-[120px] rounded-3xl mx-auto mb-5 bg-gradient-to-br from-[#1a2545] to-[#0c1226] border border-line-strong flex items-center justify-center font-display text-3xl font-semibold text-cyan shadow-[0_0_40px_rgba(63,228,255,0.12)]">
-            {initials}
+          <div className="w-[120px] h-[120px] rounded-3xl mx-auto mb-5 bg-gradient-to-br from-[#1a2545] to-[#0c1226] border border-line-strong flex items-center justify-center font-display text-3xl font-semibold text-cyan shadow-[0_0_40px_rgba(63,228,255,0.12)] overflow-hidden">
+            {profile.profile_picture ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={profile.profile_picture.startsWith("http") ? profile.profile_picture : `${API_URL}${profile.profile_picture}`}
+                alt={profile.name}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              initials
+            )}
           </div>
           <div className="text-center text-lg font-semibold mt-1">{profile.name}</div>
           <div className="text-center text-cyan text-[12.5px] font-mono mt-1">Python &amp; Backend Developer</div>
@@ -37,7 +46,7 @@ export default function About({ profile }: { profile: Profile }) {
             {profile.long_bio}
           </Reveal>
           <Reveal className="grid grid-cols-3 gap-3.5" delay={0.1}>
-            {[["15+", "Certificates"], ["03+", "Featured Projects"], ["03 Months", "Professional Internship"]].map(([n, l]) => (
+            {[["05+", "Production Projects"], ["01", "Industry Internship"], ["1000+", "Hours coding"]].map(([n, l]) => (
               <div key={l} className="glass p-5 text-center">
                 <div className="font-display text-2xl font-semibold text-white">{n}</div>
                 <div className="text-[10.5px] text-faint uppercase tracking-wider mt-1">{l}</div>

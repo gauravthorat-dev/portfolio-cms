@@ -71,7 +71,7 @@ export type Profile = {
   short_bio: string | null;
   long_bio: string | null;
   location: string | null;
-  email: string | null;
+  email_public: string | null;
   linkedin_url: string | null;
   github_url: string | null;
   website_url: string | null;
